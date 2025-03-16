@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json({ subscriptionActive: true });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("check-subscription error:", err.message);
     return NextResponse.json(
       { error: "Internal server error" },
