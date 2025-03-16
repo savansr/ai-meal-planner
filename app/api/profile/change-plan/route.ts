@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ subscription: updatedSubscription });
-  } catch (error: any) {
+  } catch (error:unknown) {
     console.error("Error changing subscription plan:", error);
     return NextResponse.json(
       { error: error.message || "Failed to change subscription plan." },
