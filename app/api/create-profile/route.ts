@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
         { message: "Profile created successfully." },
         { status: 201 }
       );
-    } catch (createError: any) {
+    } catch (createError: unknown) {
       console.error("Detailed create error:", {
         message: createError.message,
         code: createError.code,
@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Fatal error in create-profile API:", error);
     return NextResponse.json(
       { error: "Internal Server Error.", details: error.message },
