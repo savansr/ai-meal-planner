@@ -68,7 +68,7 @@ export async function POST(request: Request) {
 
   // Check if the error is an instance of Error before accessing `.message`
   if (error instanceof Error) {
-    errorMessage = err.message;
+    errorMessage = error.message;
   }
     
     console.error("Error changing subscription plan:", error);
