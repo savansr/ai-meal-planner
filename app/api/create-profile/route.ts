@@ -121,14 +121,13 @@ export async function POST(request: NextRequest) {
       
       console.error("Detailed create error:", {
         message:errorMessage || "",
-        code: createError.code,
-        meta: createError.meta,
+       
       });
       
       return NextResponse.json(
         { 
           error: "Failed to create profile.", 
-          details: createError.message
+          details: errorMessage
         },
         { status: 500 }
       );
