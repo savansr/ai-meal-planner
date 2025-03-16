@@ -48,11 +48,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ url: session.url });
   } catch (error:unknown) {
 
-     let errorMessage = "Internal server error";
+     let errorMessage = "";
 
   // Check if the error is an instance of Error before accessing `.message`
   if (error instanceof Error) {
-    errorMessage = err.message;
+    errorMessage = error.message;
   }
     
     console.error("Checkout API Error:", error);
