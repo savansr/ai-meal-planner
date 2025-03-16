@@ -112,6 +112,7 @@ export async function POST(request: NextRequest) {
       );
       
     } catch (err: unknown) {
+        let errorMessage="";
 
         if (err instanceof Error) {
        errorMessage = err.message;
