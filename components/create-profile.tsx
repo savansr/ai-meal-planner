@@ -17,7 +17,7 @@ export default function CreateProfileOnSignIn() {
   const [profileCreationAttempted, setProfileCreationAttempted] = useState(false);
   
   // Define the mutation to create a profile
-  const { mutate, isPending, isError, error } = useMutation<ApiResponse, Error>({
+  const { mutate, isPending} = useMutation<ApiResponse, Error>({
     mutationFn: async () => {
       if (!user || !user.id) {
         throw new Error("User not available");
