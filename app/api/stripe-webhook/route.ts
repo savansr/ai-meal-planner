@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
       signature || "",
       webhookSecret
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(`Webhook signature verification failed. ${err.message}`);
     return NextResponse.json({ error: err.message }, { status: 400 });
   }
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error(`stripe error: ${e.message} | EVENT TYPE: ${event.type}`);
     return NextResponse.json({ error: e.message }, { status: 400 });
   }
@@ -72,7 +72,7 @@ const handleCheckoutSessionCompleted = async (
     return;
   }
 
-  console.log("HHHHEHHEHE");
+
   // Update Prisma with subscription details
   try {
     await prisma.profile.update({
@@ -84,7 +84,7 @@ const handleCheckoutSessionCompleted = async (
       },
     });
     console.log(`Subscription activated for user: ${userId}`);
-  } catch (error: any) {
+  } catch (error:unknown) {
     console.error("Prisma Update Error:", error.message);
   }
 };
@@ -116,7 +116,7 @@ const handleInvoicePaymentFailed = async (invoice: Stripe.Invoice) => {
     }
 
     userId = profile.userId;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Prisma Query Error:", error.message);
     return;
   }
@@ -130,7 +130,7 @@ const handleInvoicePaymentFailed = async (invoice: Stripe.Invoice) => {
       },
     });
     console.log(`Subscription payment failed for user: ${userId}`);
-  } catch (error: any) {
+  } catch (error:unknown) {
     console.error("Prisma Update Error:", error.message);
   }
 };
@@ -157,7 +157,7 @@ const handleSubscriptionDeleted = async (subscription: Stripe.Subscription) => {
     }
 
     userId = profile.userId;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Prisma Query Error:", error.message);
     return;
   }
@@ -172,7 +172,7 @@ const handleSubscriptionDeleted = async (subscription: Stripe.Subscription) => {
       },
     });
     console.log(`Subscription canceled for user: ${userId}`);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Prisma Update Error:", error.message);
   }
 };
