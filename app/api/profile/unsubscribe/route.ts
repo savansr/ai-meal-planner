@@ -41,9 +41,19 @@ export async function POST() {
 
     return NextResponse.json({ subscription: canceledSubscription });
   } catch (error:unknown) {
+
+     let errorMessage = "";
+
+  // Check if the error is an instance of Error before accessing `.message`
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      }
+
+
+    
     console.error("Error unsubscribing:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to unsubscribe." },
+      { error: errorMessage || "Failed to unsubscribe." },
       { status: 500 }
     );
   }
