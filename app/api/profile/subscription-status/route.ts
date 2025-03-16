@@ -20,7 +20,7 @@ export async function GET() {
     }
 
     return NextResponse.json({ subscription: profile });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching subscription:", error);
     return NextResponse.json(
       { error: "Failed to fetch subscription details." },
