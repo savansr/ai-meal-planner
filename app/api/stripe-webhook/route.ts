@@ -19,8 +19,16 @@ export async function POST(req: NextRequest) {
       webhookSecret
     );
   } catch (err: unknown) {
-    console.error(`Webhook signature verification failed. ${err.message}`);
-    return NextResponse.json({ error: err.message }, { status: 400 });
+
+   let errorMessage = "";
+
+  // Check if the error is an instance of Error before accessing `.message`
+  if (err instanceof Error) {
+    errorMessage = err.message;
+  }
+    
+    console.error(`Webhook signature verification failed. ${errorMessage}`);
+    return NextResponse.json({ error: errorMessage }, { status: 400 });
   }
 
   try {
@@ -44,9 +52,17 @@ export async function POST(req: NextRequest) {
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
-  } catch (e: unknown) {
-    console.error(`stripe error: ${e.message} | EVENT TYPE: ${event.type}`);
-    return NextResponse.json({ error: e.message }, { status: 400 });
+  } catch (err: unknown) {
+
+    let errorMessage = "";
+
+  // Check if the error is an instance of Error before accessing `.message`
+  if (err instanceof Error) {
+    errorMessage = err.message;
+  }
+    
+    console.error(`stripe error: ${errorMessage} | EVENT TYPE: ${event.type}`);
+    return NextResponse.json({ error: errorMessage }, { status: 400 });
   }
 
   return NextResponse.json({});
@@ -85,7 +101,7 @@ const handleCheckoutSessionCompleted = async (
     });
     console.log(`Subscription activated for user: ${userId}`);
   } catch (error:unknown) {
-    console.error("Prisma Update Error:", error.message);
+    console.error("Prisma Update Error:", error);
   }
 };
 
@@ -117,7 +133,7 @@ const handleInvoicePaymentFailed = async (invoice: Stripe.Invoice) => {
 
     userId = profile.userId;
   } catch (error: unknown) {
-    console.error("Prisma Query Error:", error.message);
+    console.error("Prisma Query Error:", error);
     return;
   }
 
@@ -131,7 +147,7 @@ const handleInvoicePaymentFailed = async (invoice: Stripe.Invoice) => {
     });
     console.log(`Subscription payment failed for user: ${userId}`);
   } catch (error:unknown) {
-    console.error("Prisma Update Error:", error.message);
+    console.error("Prisma Update Error:", error);
   }
 };
 
@@ -158,7 +174,7 @@ const handleSubscriptionDeleted = async (subscription: Stripe.Subscription) => {
 
     userId = profile.userId;
   } catch (error: unknown) {
-    console.error("Prisma Query Error:", error.message);
+    console.error("Prisma Query Error:", error);
     return;
   }
 
@@ -173,6 +189,6 @@ const handleSubscriptionDeleted = async (subscription: Stripe.Subscription) => {
     });
     console.log(`Subscription canceled for user: ${userId}`);
   } catch (error: unknown) {
-    console.error("Prisma Update Error:", error.message);
+    console.error("Prisma Update Error:", error);
   }
 };
