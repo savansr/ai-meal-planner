@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ url: session.url });
-  } catch (error: any) {
+  } catch (error:unknown) {
     console.error("Checkout API Error:", error.message);
     return NextResponse.json(
       { error: error.message || "Internal Server Error" },
